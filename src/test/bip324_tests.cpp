@@ -16,6 +16,8 @@
 #include <cstdint>
 #include <vector>
 
+#include <iostream>
+
 #include <boost/test/unit_test.hpp>
 
 namespace {
@@ -68,6 +70,16 @@ void TestBIP324PacketVector(
     BOOST_CHECK(cipher);
 
     // Compare session variables.
+    std::cout << "\n";
+    std::cout << "sid" << Span{out_session_id};
+    std::cout << " == " << cipher.GetSessionID();
+    std::cout << "\n";
+    std::cout << "snd" << Span{mid_send_garbage};
+    std::cout << " == " << cipher.GetSendGarbageTerminator();
+    std::cout << "\n";
+    std::cout << "rcv" << Span{mid_recv_garbage};
+    std::cout << " == " << cipher.GetReceiveGarbageTerminator();
+    std::cout << "\n";
     BOOST_CHECK(Span{out_session_id} == cipher.GetSessionID());
     BOOST_CHECK(Span{mid_send_garbage} == cipher.GetSendGarbageTerminator());
     BOOST_CHECK(Span{mid_recv_garbage} == cipher.GetReceiveGarbageTerminator());
